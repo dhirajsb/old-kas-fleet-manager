@@ -24,6 +24,8 @@ func TestMain(m *testing.M) {
 		func(c *config.ConnectorsConfig, kc *keycloak.KeycloakConfig) {
 			c.GraphqlAPIURL = "http://localhost:8000"
 			c.ConnectorCatalogDirs = []string{"./internal/connector/test/integration/connector-catalog"}
+			c.ConnectorEvalDurationString = "30m"
+			c.ConnectorEvalOrganizations = []string{"13640210"}
 
 			kc.KeycloakClientExpire = true
 		},
