@@ -64,8 +64,6 @@ Feature: create a connector
           "kind": "Connector",
           "name": "example 1",
           "deployment_location": {
-            "kind": "addon",
-            "cluster_id": "default"
           },
           "kafka": {
             "id":"mykafka",
@@ -127,8 +125,6 @@ Feature: create a connector
         "kind": "Connector",
         "name": "example 1",
         "deployment_location": {
-          "kind": "addon",
-          "cluster_id": "default"
         },
         "connector_type_id": "aws-sqs-source-v1alpha1",
         "kafka": {

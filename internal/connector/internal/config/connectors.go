@@ -44,8 +44,8 @@ func NewConnectorsConfig() *ConnectorsConfig {
 
 func (c *ConnectorsConfig) AddFlags(fs *pflag.FlagSet) {
 	fs.StringArrayVar(&c.ConnectorCatalogDirs, "connector-catalog", c.ConnectorCatalogDirs, "Directory containing connector catalog entries")
-	fs.StringArrayVar(&c.ConnectorEvalOrganizations, "connector-eval-duration", c.ConnectorCatalogDirs, "Connector eval duration in go duration format")
-	fs.StringArrayVar(&c.ConnectorEvalOrganizations, "connector-eval-organizations", c.ConnectorCatalogDirs, "Connector eval organization IDs")
+	fs.StringVar(&c.ConnectorEvalDurationString, "connector-eval-duration", c.ConnectorEvalDurationString, "Connector eval duration in golang duration format")
+	fs.StringArrayVar(&c.ConnectorEvalOrganizations, "connector-eval-organizations", c.ConnectorEvalOrganizations, "Connector eval organization IDs")
 	fs.StringVar(&c.GraphqlAPIURL, "graphql-api-url", c.GraphqlAPIURL, "URL of the API that the graphql endpoint will call.  Setting this enables the '/api/connector_mgmt/v1/graphql' endpoint\"")
 }
 
