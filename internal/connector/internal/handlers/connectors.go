@@ -377,7 +377,7 @@ func (h ConnectorsHandler) Get(w http.ResponseWriter, r *http.Request) {
 	handlers.HandleGet(w, r, cfg)
 }
 
-// Delete is the handler for deleting a kafka request
+// Delete is the handler for deleting a Connector
 func (h ConnectorsHandler) Delete(w http.ResponseWriter, r *http.Request) {
 	connectorId := mux.Vars(r)["connector_id"]
 	cfg := &handlers.HandlerConfig{

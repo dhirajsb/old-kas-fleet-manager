@@ -270,7 +270,7 @@ func (k *connectorNamespaceService) CreateDefaultNamespace(ctx context.Context, 
 			},
 		},
 		ClusterId: connectorCluster.ID,
-		Kind: kind,
+		Kind:      kind,
 	}, owner, organisationId)
 
 	if err != nil {
