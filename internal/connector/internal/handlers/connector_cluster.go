@@ -64,7 +64,7 @@ func (h *ConnectorClusterHandler) Create(w http.ResponseWriter, r *http.Request)
 			}
 			convResource.Owner = auth.GetUsernameFromClaims(claims)
 			convResource.OrganisationId = auth.GetOrgIdFromClaims(claims)
-			convResource.Status.Phase = dbapi.ConnectorClusterPhaseUnconnected
+			convResource.Status.Phase = dbapi.ConnectorClusterPhaseDisconnected
 
 			if err := h.Service.Create(r.Context(), &convResource); err != nil {
 				return nil, err
@@ -256,7 +256,7 @@ func (h *ConnectorClusterHandler) GetNamespaces(writer http.ResponseWriter, requ
 		Action: func() (interface{}, *errors.ServiceError) {
 			ctx := request.Context()
 			listArgs := coreservices.NewListArguments(request.URL.Query())
-			resources, paging, err := h.ConnectorNamespace.List(ctx, []string{connectorClusterId} ,listArgs)
+			resources, paging, err := h.ConnectorNamespace.List(ctx, []string{connectorClusterId}, listArgs)
 			if err != nil {
 				return nil, err
 			}

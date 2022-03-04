@@ -1789,6 +1789,7 @@ components:
       enum:
       - disconnected
       - ready
+      - deleting
       type: string
     ConnectorClusterRequestMeta:
       properties:
@@ -1797,7 +1798,7 @@ components:
     ConnectorClusterRequest:
       allOf:
       - $ref: '#/components/schemas/ConnectorClusterRequestMeta'
-      description: Schema for the request to update a data plane cluster's status
+      description: Schema for the request to update a data plane cluster's name
     ConnectorClusterMeta:
       allOf:
       - $ref: '#/components/schemas/ObjectMeta'

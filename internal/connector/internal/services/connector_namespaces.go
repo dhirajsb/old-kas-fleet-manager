@@ -209,6 +209,7 @@ func (k *connectorNamespaceService) Delete(namespaceId string) *errors.ServiceEr
 
 		if err := dbConn.Where("id = ?", namespaceId).
 			First(&dbapi.ConnectorNamespace{}).Error; err != nil {
+
 			return services.HandleGetError("Connector namespace", "id", namespaceId, err)
 		}
 
@@ -281,4 +282,53 @@ func removeConnectorsFromNamespace(dbConn *gorm.DB, query interface{}, values ..
 		return services.HandleUpdateError("Connector", err)
 	}
 	return nil
+}
+
+
+// ReconcileDeletingNamespaces deletes empty namespaces in phase deleting with no connectors,
+func (k *connectorNamespaceService) ReconcileDeletingNamespaces() (int, []*errors.ServiceError) {
+	count := 0
+	var errs []*errors.ServiceError
+	if err := k.connectionFactory.New().Transaction(func(dbConn *gorm.DB) error {
+
+		// get ids of all namespaces in deleting phase that have no namespaces
+		var namespaceIdCount []struct{
+			ID            string
+			NumConnectors int
+		}
+		if err := dbConn.Table("connector_namespaces").Select("id", "count(namespace_id) AS num_connectors").
+			Joins("LEFT JOIN connector_statuses on connector_statuses.deleted_at IS NULL AND " +
+				"connector_statuses.phase = ? AND " +
+				"connector_statuses.namespace_id = connector_statuses.id AND " +
+				"connector_statuses.deleted_at IS NULL", dbapi.ConnectorNamespacePhaseDeleting).
+			Group("connector_statuses.id").
+			Having("connector_statuses.deleted_at IS NULL AND count(namespace_id) = 0").
+			Find(&namespaceIdCount).Error; err != nil {
+			return services.HandleGetError("Connector namespace", "status_phase", dbapi.ConnectorNamespacePhaseDeleting, err)
+		}
+
+		count = len(namespaceIdCount)
+		if count == 0 {
+			return nil
+		}
+
+		var namespaceIds = make([]string, count)
+		for i, c := range namespaceIdCount {
+			namespaceIds[i] = c.ID
+		}
+
+		// delete all the empty deleting namespaces
+		if err := dbConn.Where("id IN ?", namespaceIds).
+			Delete(&dbapi.ConnectorNamespace{}).Error; err != nil {
+			return services.HandleDeleteError("Connector namespace", "id", namespaceIds, err)
+		}
+
+		return nil
+
+	}); err != nil {
+		errs = append(errs, services.HandleDeleteError("Connector namespace", "status_phase",
+			dbapi.ConnectorNamespacePhaseDeleting, err))
+	}
+
+	return count, nil
 }

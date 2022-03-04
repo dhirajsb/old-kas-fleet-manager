@@ -13,14 +13,15 @@ import (
 type ConnectorClusterPhaseEnum = string
 
 const (
-	// ConnectorClusterPhaseUnconnected - cluster status when first created
-	ConnectorClusterPhaseUnconnected ConnectorClusterPhaseEnum = "disconnected"
-	// ConnectorClusterPhaseReady- cluster status when it operational
+	// ConnectorClusterPhaseDisconnected - cluster status when first created
+	ConnectorClusterPhaseDisconnected ConnectorClusterPhaseEnum = "disconnected"
+	// ConnectorClusterPhaseReady - cluster status when it operational
 	ConnectorClusterPhaseReady ConnectorClusterPhaseEnum = "ready"
+	// ConnectorClusterPhaseDeleting - cluster status when in the process of being deleted
+	ConnectorClusterPhaseDeleting ConnectorClusterPhaseEnum = "deleting"
 )
 
-var AllConnectorClusterStatus = []ConnectorClusterPhaseEnum{
-	ConnectorClusterPhaseUnconnected,
+var AgentRequestConnectorClusterStatus = []string{
 	ConnectorClusterPhaseReady,
 }
 

@@ -16,4 +16,5 @@ type ConnectorClusterState string
 const (
 	DISCONNECTED ConnectorClusterState = "disconnected"
 	READY        ConnectorClusterState = "ready"
+	DELETING     ConnectorClusterState = "deleting"
 )

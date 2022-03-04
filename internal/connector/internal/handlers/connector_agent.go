@@ -31,7 +31,7 @@ func (h *ConnectorClusterHandler) UpdateConnectorClusterStatus(w http.ResponseWr
 		MarshalInto: &resource,
 		Validate: []handlers.Validate{
 			handlers.Validation("connector_cluster_id", &connectorClusterId, handlers.MinLen(1), handlers.MaxLen(maxConnectorClusterIdLength)),
-			handlers.Validation("phase", &resource.Phase, handlers.IsOneOf(dbapi.AllConnectorClusterStatus...)),
+			handlers.Validation("phase", &resource.Phase, handlers.IsOneOf(dbapi.AgentRequestConnectorClusterStatus...)),
 		},
 		Action: func() (interface{}, *errors.ServiceError) {
 			ctx := r.Context()

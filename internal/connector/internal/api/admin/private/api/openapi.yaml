@@ -922,6 +922,7 @@ components:
       enum:
       - disconnected
       - ready
+      - deleting
       type: string
     Error:
       allOf:

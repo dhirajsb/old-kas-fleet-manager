@@ -2,34 +2,34 @@ package dbapi
 
 import "github.com/bf2fc6cc711aee1a0c2a/kas-fleet-manager/pkg/api"
 
-type ConnectorStatusPhase = string
+type ConnectorStatusPhaseEnum = string
 
 const (
-	ConnectorStatusPhaseAssigning      ConnectorStatusPhase = "assigning"      // set by kas-fleet-manager - user request
-	ConnectorStatusPhaseAssigned       ConnectorStatusPhase = "assigned"       // set by kas-fleet-manager - worker
-	ConnectorStatusPhaseUpdating       ConnectorStatusPhase = "updating"       // set by kas-fleet-manager - user request
-	ConnectorStatusPhaseStopped        ConnectorStatusPhase = "stopped"        // set by kas-fleet-manager - user request
-	ConnectorStatusPhaseProvisioning   ConnectorStatusPhase = "provisioning"   // set by kas-agent
-	ConnectorStatusPhaseReady          ConnectorStatusPhase = "ready"          // set by the agent
-	ConnectorStatusPhaseFailed         ConnectorStatusPhase = "failed"         // set by the agent
-	ConnectorStatusPhaseDeprovisioning ConnectorStatusPhase = "deprovisioning" // set by kas-agent
-	ConnectorStatusPhaseDeleting       ConnectorStatusPhase = "deleting"       // set by the kas-fleet-manager - user request
-	ConnectorStatusPhaseDeleted        ConnectorStatusPhase = "deleted"        // set by the agent
+	ConnectorStatusPhaseAssigning      ConnectorStatusPhaseEnum = "assigning"      // set by kas-fleet-manager - user request
+	ConnectorStatusPhaseAssigned       ConnectorStatusPhaseEnum = "assigned"       // set by kas-fleet-manager - worker
+	ConnectorStatusPhaseUpdating       ConnectorStatusPhaseEnum = "updating"       // set by kas-fleet-manager - user request
+	ConnectorStatusPhaseStopped        ConnectorStatusPhaseEnum = "stopped"        // set by kas-fleet-manager - user request
+	ConnectorStatusPhaseProvisioning   ConnectorStatusPhaseEnum = "provisioning"   // set by kas-agent
+	ConnectorStatusPhaseReady          ConnectorStatusPhaseEnum = "ready"          // set by the agent
+	ConnectorStatusPhaseFailed         ConnectorStatusPhaseEnum = "failed"         // set by the agent
+	ConnectorStatusPhaseDeprovisioning ConnectorStatusPhaseEnum = "deprovisioning" // set by kas-agent
+	ConnectorStatusPhaseDeleting       ConnectorStatusPhaseEnum = "deleting"       // set by the kas-fleet-manager - user request
+	ConnectorStatusPhaseDeleted        ConnectorStatusPhaseEnum = "deleted"        // set by the agent
 )
 
-var ValidDesiredStates = []ConnectorStatusPhase{
-	ConnectorStatusPhaseReady,
-	ConnectorStatusPhaseStopped,
-	ConnectorStatusPhaseDeleted,
+var ValidDesiredStates = []string{
+	string(ConnectorStatusPhaseReady),
+	string(ConnectorStatusPhaseStopped),
+	string(ConnectorStatusPhaseDeleted),
 }
 
-var AgentSetConnectorStatusPhase = []ConnectorStatusPhase{
-	ConnectorStatusPhaseProvisioning,
-	ConnectorStatusPhaseDeprovisioning,
-	ConnectorStatusPhaseStopped,
-	ConnectorStatusPhaseReady,
-	ConnectorStatusPhaseFailed,
-	ConnectorStatusPhaseDeleted,
+var AgentSetConnectorStatusPhase = []string{
+	string(ConnectorStatusPhaseProvisioning),
+	string(ConnectorStatusPhaseDeprovisioning),
+	string(ConnectorStatusPhaseStopped),
+	string(ConnectorStatusPhaseReady),
+	string(ConnectorStatusPhaseFailed),
+	string(ConnectorStatusPhaseDeleted),
 }
 
 type Connector struct {
@@ -59,7 +59,7 @@ type Connector struct {
 type ConnectorStatus struct {
 	api.Meta
 	NamespaceID *string
-	Phase       string
+	Phase       ConnectorStatusPhaseEnum
 }
 
 type ConnectorList []*Connector

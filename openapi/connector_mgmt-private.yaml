@@ -395,6 +395,10 @@ components:
           type: string
         version:
           type: string
+        namespaces:
+          type: array
+          items:
+            $ref: '#/components/schemas/ConnectorNamespaceStatus'
         conditions:
           type: array
           items:
